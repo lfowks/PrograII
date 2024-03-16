@@ -2,32 +2,90 @@
 
 
 using POO.Entidades;
+using POO.Listas.Entidades;
+using POO.Listas.Servicios;
 
 //Estudiante objEstudiante = new Estudiante();
 //Estudiante2 objEstudiante2 = new Estudiante2();
 
 //objEstudiante.AgregarEstudiante();
 //objEstudiante2.AgregarEstudiante();
-
-List<int> listIntegers = new List<int>();
-
-listIntegers.Add(1);
-listIntegers.Add(2);
-listIntegers.Add(3);
-
-foreach (int item in listIntegers)
+void PrintList(List<Student> listStudent)
 {
-    Console.WriteLine(item);
+    foreach (Student item in listStudent)
+    {
+        Console.WriteLine(item.Id);
+        Console.WriteLine(item.Name);
+        Console.WriteLine(item.LastName);
+        Console.WriteLine();
+    }
 }
 
 
-List<Producto> listProducts = new List<Producto>();
+StudentService studentService = new StudentService();
 
-foreach (Producto item in listProducts)
+
+//AGREGAR
+
+Student newStudent = new Student
 {
-    Console.WriteLine(item.Nombre);
-}
+    Name = "Student 1",
+    LastName = "Student Last Name 1"
+};
+
+Student newStudent2 = new Student
+{
+    Name = "Student 2",
+    LastName = "Student Last Name 2"
+};
+
+Student newStudent3 = new Student
+{
+    Name = "Student 3",
+    LastName = "Student Last Name 3"
+};
 
 
+studentService.AddStudent(newStudent);
+studentService.AddStudent(newStudent2);
+studentService.AddStudent(newStudent3);
 
 
+List<Student> listStudent = new List<Student>();
+
+Console.WriteLine("GetStudents");
+Console.WriteLine();
+listStudent = studentService.GetStudents();
+
+PrintList(listStudent);
+
+Student studentFound = studentService.GetStudentById(2);
+
+Console.WriteLine("GetStudentById");
+Console.WriteLine();
+Console.WriteLine(studentFound.Id);
+Console.WriteLine(studentFound.Name);
+Console.WriteLine(studentFound.LastName);
+Console.WriteLine();
+
+
+Console.WriteLine("Delete");
+studentService.DeleteStudent(3);
+
+Console.WriteLine("GetStudents after Deleting");
+Console.WriteLine();
+listStudent = studentService.GetStudents();
+
+PrintList(listStudent);
+
+Console.WriteLine("Update");
+Console.WriteLine();
+Student newStudentUpdated = new Student
+{
+    Name = "Student 1 - 1",
+    LastName = "Student Last Name 1 - 1"
+};
+
+studentService.UpdateStudent(1, newStudentUpdated);
+
+PrintList(listStudent);
